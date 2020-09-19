@@ -1,0 +1,18 @@
+button{
+    border: none;
+    background-color: cornflowerblue;
+}
+input[type='submit']{
+    border: none;
+    background-color: cornflowerblue;
+}
+input[type='submit']:focus, input[type='submit']:hover{
+    filter: brightness(120%);
+}
+button:focus, button:hover{
+    filter: brightness(120%);
+}
+
+.strikethrough{
+    text-decoration: line-through;
+}
