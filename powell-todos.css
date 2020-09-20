@@ -12,7 +12,12 @@ input[type='submit']:focus, input[type='submit']:hover{
 button:focus, button:hover{
     filter: brightness(120%);
 }
-
+li{
+    list-style-type: none;
+}
+.newtodoitem{
+    display: block;
+}
 .strikethrough{
     text-decoration: line-through;
 }

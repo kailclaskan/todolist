@@ -35,6 +35,7 @@ function addTask(){
     const addBtn = document.createElement('button');
     addBtn.textContent = 'Remove Task';
     newToDo.textContent = text.value + ' ';
+    newToDo.className = "newtodoitem";
     list.appendChild(newToDo);
     newToDo.appendChild(addBtn);
     arr = [];
