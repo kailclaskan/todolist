@@ -5,6 +5,8 @@ const list = document.querySelector('#todolist');
 const frm = document.querySelector('#frmnewtodo');
 //Find the value of the input
 const text = document.querySelector('#txtnewtodo');
+//Find the body
+const bod = document.querySelector('body');
 //Array to store inner html for each to do
 let arr = [];
 //Get Item from Local Storage
@@ -33,6 +35,7 @@ writeList();
 function addTask(){
     const newToDo = document.createElement('li');
     const addBtn = document.createElement('button');
+    addBtn.className = "removebtn";
     addBtn.textContent = 'Remove Task';
     newToDo.textContent = text.value + ' ';
     newToDo.className = "newtodoitem";
@@ -71,4 +74,13 @@ list.addEventListener('click', function(e){
     removeExtra(arr);
     removeExtra(refList);
     setItem();
+})
+function clearAll(){
+    localStorage.clear();
+}
+bod.addEventListener('click', function(e){
+    if(e.target.id === "clearbtn"){
+        clearAll();
+        alert('Storage Cleared');
+    }
 })

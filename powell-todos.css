@@ -15,9 +15,28 @@ button:focus, button:hover{
 li{
     list-style-type: none;
 }
+h1{
+    text-align: center;
+}
+body{
+    background-color: cadetblue;
+}
 .newtodoitem{
     display: block;
+    border-style: groove;
+    border-width: 6px;
+    padding: 10px;
+    margin-right: 2.75rem;
 }
 .strikethrough{
     text-decoration: line-through;
+}
+.removebtn{
+    margin-left: 10rem;
+}
+#txtnewtodo{
+    margin-left: 2.75rem;
+}
+#clearbtn{
+    margin-left: 2.75rem;
 }
