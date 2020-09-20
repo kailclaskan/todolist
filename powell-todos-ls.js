@@ -1,77 +1,77 @@
-//UL
+
+//Grab the unordered list
 const list = document.querySelector('#todolist');
-//TEXT for NEW TODO
+//Form holding the New Todo Task
+const frm = document.querySelector('#frmnewtodo');
+//Find the value of the input
 const text = document.querySelector('#txtnewtodo');
-//FORM holding NEW TODO
-const form = document.querySelector('#frmnewtodo');
-//BUTTON for NEW TODO
-const btn = document.querySelector('#btnnewtodo');
-//Array of Elements
+//Array to store inner html for each to do
 let arr = [];
 //Get Item from Local Storage
-const retData = localStorage.getItem('todolist');
-const refList = JSON.parse(retData);
-//If the reference list has content
-if(refList){
-    //const lis = document.querySelectorAll('li');
-    console.log(refList.length);
-    //create new li for each and add it to the page
-    for (let i = 0; i < refList.length; i++){
-            const newLI = document.createElement('li');
-            //To ensure a button is created I used innerHTML.
-            newLI.innerHTML = refList[i];
-            list.append(newLI);
-            arr = [];
-            arr.push(newLI.innerHTML);
+let retData = localStorage.getItem('todolist');
+//Turn it into a usable list.
+let refList = JSON.parse(retData);
+//Remove Duplicates
+function removeExtra(data){
+    return [...new Set(data)]
+}
+//Remove the task.
+function writeList(){
+    if(refList){
+        arr = []
+        removeExtra(refList);
+        for(li of refList){
+            const newLi = document.createElement('li');
+            newLi.innerHTML = li;
+            list.append(newLi);
+            arr.push(newLi.innerHTML);
+        }
     }
 }
-
-//Add new to do
-form.addEventListener('submit', function(e){
-    e.preventDefault();
-    //If there's a value in the form create new element
-    if(text.value){
-        const liToDo = document.createElement('li');
-        const btnRemove = document.createElement('button');
-        btnRemove.textContent = "Remove Me";
-        liToDo.textContent = text.value + " ";
-        list.appendChild(liToDo);
-        liToDo.appendChild(btnRemove);
-        arr.push(liToDo.innerHTML);
-        form.reset();
-        }//Else do nothing.
-        localStorage.setItem('todolist', JSON.stringify(arr));
-        //Compared to Solution this is technically the same, aside
-        //from rule I have that prevents adding empty values.
-    });
-
-//UL listenst for click on element
-list.addEventListener("click", function(e){
-    console.log(e.target);
-    if(e.target.tagName === "BUTTON"){
-        e.target.parentElement.remove();
-        localStorage.clear();
-        const lis = document.querySelectorAll('li');
-        arr = [];
-        for(let i = 0; i < lis.length; i++){
-            arr.push(lis[i].innerHTML);
-        }
-    }
-    //Else if the li is clicked strikethrough class is toggled
-    else if(e.target.tagName === "LI"){
-        e.target.classList.add("strikethrough");
-        localStorage.clear();
-        arr = [];
-        //arr.push(e.target.parentElement.innerHTML);
-        const lis = document.querySelectorAll('li');
-        for(let i = 0; i < lis.length; i++){
-            arr.push(lis[i].innerHTML);
-        }
-    }
-    console.log(arr.length);
+writeList();
+//Strike through the task
+function strikeTask(){
+    e.target.classList.add('strikethrough');
+}
+//Add new task.
+function addTask(){
+    const newToDo = document.createElement('li');
+    const addBtn = document.createElement('button');
+    addBtn.textContent = 'Remove Task';
+    newToDo.textContent = text.value + ' ';
+    list.appendChild(newToDo);
+    newToDo.appendChild(addBtn);
+    arr = [];
+    arr.push(newToDo.parentElement.innerHTML);
+    frm.reset();
+}
+function setItem(){
     localStorage.setItem('todolist', JSON.stringify(arr));
-    //Compared to Solution this is technically the same, aside
-    //from the target variable and the way the strikethrough is 
-    //added. (I use a class that toggles on and off.)
+}
 
+frm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(text.value){
+        addTask();
+    }
+    setItem();
+})
+list.addEventListener('click', function(e){
+    const tag = e.target.tagName;
+    localStorage.clear();
+    if(tag === "BUTTON"){
+        e.target.parentElement.remove();
+        const lis = document.querySelectorAll('li');
+        for(li of lis){
+            arr = [];
+            arr.push(li.parentElement.innerHTML);
+        }
+    }else if (tag === "LI"){
+        e.target.classList.add('strikethrough');
+        arr = [];
+        arr.push(e.target.parentElement.innerHTML);
+    }
+    removeExtra(arr);
+    removeExtra(refList);
+    setItem();
 })
