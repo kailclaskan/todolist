@@ -29,10 +29,6 @@ function writeList(){
     }
 }
 writeList();
-//Strike through the task
-function strikeTask(){
-    e.target.classList.add('strikethrough');
-}
 //Add new task.
 function addTask(){
     const newToDo = document.createElement('li');
